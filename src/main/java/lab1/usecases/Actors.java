@@ -1,13 +1,15 @@
 package lab1.usecases;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.inject.Model;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import lab1.dao.ActorDAO;
 import lab1.entities.Actor;
 import java.util.List;
 
-@Model
+@Named
+@RequestScoped
 public class Actors {
     @Inject
     private ActorDAO actorDAO;

@@ -11,7 +11,7 @@ public class Studio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "STUDIO_NAME", nullable = false) // Pavyzdys: laukas name, stulpelis STUDIO_NAME
+    @Column(name = "STUDIO_NAME", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "studio", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

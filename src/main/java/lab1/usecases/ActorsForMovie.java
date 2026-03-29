@@ -1,9 +1,10 @@
 package lab1.usecases;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.inject.Model;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import lab1.dao.ActorDAO;
 import lab1.dao.MovieDAO;
@@ -12,7 +13,8 @@ import lab1.entities.Movie;
 import java.io.Serializable;
 import java.util.Map;
 
-@Model
+@Named
+@RequestScoped
 public class ActorsForMovie implements Serializable {
     @Inject private MovieDAO movieDAO;
     @Inject private ActorDAO actorDAO;
@@ -63,7 +65,6 @@ public class ActorsForMovie implements Serializable {
         return "actors?faces-redirect=true&movieId=" + this.movieId;
     }
 
-    // Geteriai ir seteriai
     public Movie getMovie() { return movie; }
     public void setMovie(Movie movie) { this.movie = movie; }
     public Actor getActorToCreate() { return actorToCreate; }

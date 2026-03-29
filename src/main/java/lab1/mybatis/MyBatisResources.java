@@ -1,5 +1,6 @@
 package lab1.mybatis;
 
+import jakarta.enterprise.context.RequestScoped;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -19,7 +20,7 @@ public class MyBatisResources {
     }
 
     @Produces
-    @jakarta.enterprise.context.RequestScoped
+    @RequestScoped
     public org.apache.ibatis.session.SqlSession createSqlSession(SqlSessionFactory factory) {
         return factory.openSession();
     }

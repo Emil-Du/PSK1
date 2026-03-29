@@ -20,12 +20,10 @@ public class StudioDAO {
         this.em.persist(studio);
     }
 
-    // Būtinas navigacijai: randa studiją pagal ID iš URL parametro
     public Studio findOne(Long id) {
         return em.find(Studio.class, id);
     }
 
-    // Būtinas pridedant filmus: atnaujina studijos objektą su nauju filmu
     public void update(Studio studio) {
         this.em.merge(studio);
     }

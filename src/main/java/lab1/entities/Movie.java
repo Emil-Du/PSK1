@@ -14,12 +14,12 @@ public class Movie {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "STUDIO_ID") // Foreign Key į Studio lentelę
+    @JoinColumn(name = "STUDIO_ID")
     private Studio studio;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "MOVIE_ACTOR", // Tarpinė lentelė many-to-many ryšiui
+            name = "MOVIE_ACTOR",
             joinColumns = @JoinColumn(name = "MOVIE_ID"),
             inverseJoinColumns = @JoinColumn(name = "ACTOR_ID")
     )

@@ -11,7 +11,7 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "STAGE_NAME") // Skirtingas vardas nei DB stulpelyje
+    @Column(name = "STAGE_NAME")
     private String name;
 
     @ManyToMany(mappedBy = "actors", fetch = FetchType.EAGER)
