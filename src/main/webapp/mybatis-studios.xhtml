@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>MyBatis Studijos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: 8px; text-align: left; }
+        .form-box { margin-top: 20px; padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9; }
+    </style>
+</h:head>
+<h:body>
+    <h2>Kino studijos (MyBatis įgyvendinimas)</h2>
+
+    <h:form>
+        <h:dataTable value="#{studiosMyBatis.allStudios}" var="s" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{s.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Studijos pavadinimas</f:facet>
+                #{s.name}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Filmai (One-to-Many ryšys)</f:facet>
+                <ul>
+                    <ui:repeat value="#{s.movies}" var="m">
+                        <li>#{m.title} (ID: #{m.id})</li>
+                    </ui:repeat>
+                </ul>
+                <h:outputText value="Filmų kol kas nėra" rendered="#{empty s.movies}" />
+            </h:column>
+        </h:dataTable>
+
+        <div class="form-box">
+            <h3>Pridėti naują studiją</h3>
+            <h:panelGrid columns="2">
+                Pavadinimas:
+                <h:inputText value="#{studiosMyBatis.studioToCreate.name}" required="true" />
+            </h:panelGrid>
+            <h:commandButton value="Sukurti per MyBatis"
+                             actionListener="#{studiosMyBatis.createStudio}"
+                             action="mybatis-studios?faces-redirect=true" />
+        </div>
+    </h:form>
+
+    <hr/>
+    <h:link value="Grįžti į pagrindinį (JPA dalį)" outcome="index" />
+</h:body>
+</html>

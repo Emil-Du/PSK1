@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>Filmo aktoriai</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .box { border: 1px solid #ddd; padding: 10px; background: #f9f9f9; margin-bottom: 10px; }
+    </style>
+</h:head>
+<h:body>
+    <h2>Filmas: #{actorsForMovie.movie.title}</h2>
+
+    <h3>Aktorių sąrašas:</h3>
+    <ul>
+        <ui:repeat value="#{actorsForMovie.movie.actors}" var="a">
+            <li>
+                <h:link value="#{a.name}" outcome="actor-details?actorId=#{a.id}" />
+                (ID: #{a.id})
+            </li>
+        </ui:repeat>
+    </ul>
+
+    <div class="box">
+        <h3>Sukurti naują aktorių šiam filmui</h3>
+        <h:form>
+            <h:inputHidden value="#{actorsForMovie.movieId}" />
+            Vardas: <h:inputText value="#{actorsForMovie.actorToCreate.name}" required="true" />
+            <h:commandButton value="Sukurti ir priskirti" action="#{actorsForMovie.addActor}">
+                <f:param name="movieId" value="#{actorsForMovie.movieId}" />
+            </h:commandButton>
+        </h:form>
+    </div>
+
+    <div class="box">
+        <h3>Priskirti ESAMĄ aktorių (Many-to-Many demo)</h3>
+        <h:form>
+            <h:inputHidden value="#{actorsForMovie.movieId}" />
+            <h:selectOneMenu value="#{actorsForMovie.actorIdToAssign}">
+                <f:selectItem itemLabel="-- Pasirinkite aktorių --" itemValue="#{null}" />
+                <f:selectItems value="#{actors.allActors}" var="act"
+                               itemLabel="#{act.name}" itemValue="#{act.id}" />
+            </h:selectOneMenu>
+            <h:commandButton value="Priskirti šiam filmui" action="#{actorsForMovie.assignActor}">
+                <f:param name="movieId" value="#{actorsForMovie.movieId}" />
+            </h:commandButton>
+        </h:form>
+    </div>
+
+    <hr/>
+    <h:link value="Atgal į filmus" outcome="movies?studioId=#{actorsForMovie.movie.studio.id}" />
+</h:body>
+</html>

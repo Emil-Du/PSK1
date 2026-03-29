@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lab1.mybatis.StudioMapper">
+
+    <resultMap id="StudioResultMap" type="lab1.entities.Studio">
+        <id column="studio_id" property="id"/>
+        <result column="studio_name" property="name"/>
+
+        <collection property="movies" ofType="lab1.entities.Movie">
+            <id column="movie_id" property="id"/>
+            <result column="movie_title" property="title"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="StudioResultMap">
+        SELECT
+            s.id AS studio_id,
+            s.studio_name,
+            m.id AS movie_id,
+            m.title AS movie_title
+        FROM "STUDIO" s
+                 LEFT JOIN "MOVIE" m ON s.id = m.studio_id
+    </select>
+
+    <insert id="insert" parameterType="lab1.entities.Studio" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO "STUDIO" ("STUDIO_NAME")
+        VALUES (#{name})
+    </insert>
+
+</mapper>

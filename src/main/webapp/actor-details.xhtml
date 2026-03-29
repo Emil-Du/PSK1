@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Aktoriaus filmai</title>
+</h:head>
+<h:body>
+    <h2>Aktorius: #{actorDetails.actor.name}</h2>
+
+    <h3>Filmai, kuriuose vaidina šis aktorius:</h3>
+    <h:dataTable value="#{actorDetails.actor.movies}" var="movie" border="1">
+        <h:column>
+            <f:facet name="header">Filmo ID</f:facet>
+            #{movie.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Pavadinimas</f:facet>
+            <h:link value="#{movie.title}" outcome="actors?movieId=#{movie.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Studija</f:facet>
+            #{movie.studio.name}
+        </h:column>
+    </h:dataTable>
+
+    <hr/>
+    <h:link value="Grįžti į pagrindinį" outcome="index" />
+</h:body>
+</html>
