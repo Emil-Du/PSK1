@@ -19,12 +19,8 @@ public class ActorDetails implements Serializable {
     private Actor actor;
     private Long actorId;
 
-    @PostConstruct
     public void init() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String idParam = params.get("actorId");
-        if (idParam != null) {
-            this.actorId = Long.parseLong(idParam);
+        if (this.actorId != null) {
             this.actor = actorDAO.findOne(this.actorId);
         }
     }

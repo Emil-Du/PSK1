@@ -3,13 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:viewParam name="actorId" value="#{actorDetails.actorId}"/>
+    <f:viewAction action="#{actorDetails.init}"/>
+</f:metadata>
+
 <h:head>
     <title>Aktoriaus filmai</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #2196F3; color: white; }
+    </style>
 </h:head>
 <h:body>
     <h2>Aktorius: #{actorDetails.actor.name}</h2>
 
     <h3>Filmai, kuriuose vaidina šis aktorius:</h3>
+
     <h:dataTable value="#{actorDetails.actor.movies}" var="movie" border="1">
         <h:column>
             <f:facet name="header">Filmo ID</f:facet>

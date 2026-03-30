@@ -26,20 +26,16 @@ public class MoviesForStudio implements Serializable {
     private Movie movieToCreate = new Movie();
     private Long studioId;
 
-    @PostConstruct
     public void init() {
-        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String sId = params.get("studioId");
-        if (sId != null) {
-            this.studioId = Long.parseLong(sId);
+        if (this.studioId != null) {
             this.studio = studioDAO.findOne(this.studioId);
         }
     }
 
     @Transactional
     public String createMovie() {
-        if (this.studio == null && this.studioId != null) {
-            this.studio = studioDAO.findOne(this.studioId);
+        if (this.studio == null) {
+            init();
         }
 
         movieToCreate.setStudio(this.studio);

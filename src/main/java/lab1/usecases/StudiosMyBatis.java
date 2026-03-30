@@ -26,7 +26,6 @@ public class StudiosMyBatis {
             this.allStudios = studioMyBatisDAO.loadAll();
         } catch (Exception e) {
             this.allStudios = new java.util.ArrayList<>();
-            System.out.println("MyBatis: Lentelės dar nėra, laukiam kol JPA jas sukurs...");
         }
     }
 

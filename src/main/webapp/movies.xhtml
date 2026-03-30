@@ -3,6 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:viewParam name="studioId" value="#{moviesForStudio.studioId}"/>
+    <f:viewAction action="#{moviesForStudio.init}"/>
+</f:metadata>
+
 <h:head>
     <title>Studijos filmai</title>
     <style>
@@ -15,30 +21,24 @@
 <h:body>
     <h2>Studijos: #{moviesForStudio.studio.name} filmai</h2>
 
-    <h:form>
-        <h:dataTable value="#{moviesForStudio.studio.movies}" var="movie" border="1">
-            <h:column>
-                <f:facet name="header">ID</f:facet>
-                #{movie.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Pavadinimas</f:facet>
-                <h:link value="#{movie.title}" outcome="actors?movieId=#{movie.id}" />
-            </h:column>
-        </h:dataTable>
-    </h:form>
+    <h:dataTable value="#{moviesForStudio.studio.movies}" var="movie" border="1">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{movie.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Pavadinimas</f:facet>
+            <h:link value="#{movie.title}" outcome="actors?movieId=#{movie.id}" />
+        </h:column>
+    </h:dataTable>
 
     <h:form>
         <h3>Pridėti naują filmą</h3>
-        <h:inputHidden value="#{moviesForStudio.studioId}" />
-
         <h:panelGrid columns="2">
             <h:outputLabel for="title" value="Filmo pavadinimas:" />
             <h:inputText id="title" value="#{moviesForStudio.movieToCreate.title}" required="true" />
 
-            <h:commandButton value="Išsaugoti filmą" action="#{moviesForStudio.createMovie}">
-                <f:param name="studioId" value="#{moviesForStudio.studioId}" />
-            </h:commandButton>
+            <h:commandButton value="Išsaugoti filmą" action="#{moviesForStudio.createMovie}" />
         </h:panelGrid>
     </h:form>
 
