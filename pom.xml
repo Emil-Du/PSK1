@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.example</groupId>
+    <groupId>lt.vu.mif.psk</groupId>
     <artifactId>Lab1</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Lab1</name>
     <packaging>war</packaging>
+    <name>Maven Webapp</name>
 
     <dependencies>
-        <!-- Jakarta EE API -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>10.0.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- H2 Database - always included -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.4.240</version>
+            <version>2.3.232</version>
         </dependency>
-
-        <!-- MyBatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.5.16</version>
         </dependency>
-
-        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -49,6 +40,7 @@
     </properties>
 
     <build>
+        <finalName>Lab1</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -74,13 +66,6 @@
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven3-plugin</artifactId>
                     <version>1.10.25</version>
-                    <configuration>
-                        <configuration>
-                            <properties>
-                                <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
-                            </properties>
-                        </configuration>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -138,7 +123,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <!-- WildFly provides all Jakarta EE implementations, only need H2 -->
             <build>
                 <pluginManagement>
                     <plugins>
@@ -160,49 +144,19 @@
                                         </dependency>
                                     </dependencies>
                                 </container>
-                                <!-- <configuration>
-                                  <properties>
-                                    <cargo.datasource.datasource.h2>
-                                      cargo.datasource.driver=org.h2.Driver|
-                                      cargo.datasource.url=jdbc:h2:~/data/librarydb;DB_CLOSE_DELAY=-1|
-                                      cargo.datasource.jndi=java:comp/env/jdbc/LibraryDS|
-                                      cargo.datasource.username=sa|
-                                      cargo.datasource.password=|
-                                      cargo.datasource.type=javax.sql.DataSource
-                                    </cargo.datasource.datasource.h2>
-                                  </properties>
-                                </configuration> -->
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-
-        <profile>
-            <id>glassfish7x</id>
-            <!-- GlassFish 7 provides all Jakarta EE 10 implementations, only need H2 -->
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.cargo</groupId>
-                            <artifactId>cargo-maven3-plugin</artifactId>
-                            <configuration>
-                                <container>
-                                    <containerId>glassfish7x</containerId>
-                                    <artifactInstaller>
-                                        <groupId>org.glassfish.main.distributions</groupId>
-                                        <artifactId>glassfish</artifactId>
-                                        <version>7.0.19</version>
-                                    </artifactInstaller>
-                                    <dependencies>
-                                        <dependency>
-                                            <groupId>com.h2database</groupId>
-                                            <artifactId>h2</artifactId>
-                                        </dependency>
-                                    </dependencies>
-                                </container>
+                                <configuration>
+                                    <properties>
+                                        <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+                                        <cargo.datasource.datasource.h2>
+                                            cargo.datasource.driver=org.h2.Driver|
+                                            cargo.datasource.url=jdbc:h2:file:C:/Users/Emil/IdeaProjects/Lab1/cinema_db;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1|
+                                            cargo.datasource.jndi=java:/jboss/datasources/CinemaDS|
+                                            cargo.datasource.username=sa|
+                                            cargo.datasource.password=|
+                                            cargo.datasource.type=javax.sql.DataSource
+                                        </cargo.datasource.datasource.h2>
+                                    </properties>
+                                </configuration>
                             </configuration>
                         </plugin>
                     </plugins>
@@ -211,4 +165,3 @@
         </profile>
     </profiles>
 </project>
-

@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import lab1.dao.ActorDAO;
+import lab1.dao.IMovieDAO;
 import lab1.dao.MovieDAO;
 import lab1.entities.Actor;
 import lab1.entities.Movie;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @RequestScoped
 public class ActorsForMovie implements Serializable {
 
-    @Inject private MovieDAO movieDAO;
+    @Inject private IMovieDAO movieDAO;
     @Inject private ActorDAO actorDAO;
 
     private Movie movie;
@@ -60,6 +61,13 @@ public class ActorsForMovie implements Serializable {
             }
         }
         return "actors?faces-redirect=true&movieId=" + this.movieId;
+    }
+
+    public int getActorCount(Movie movie) {
+        if (movie == null || movie.getActors() == null) {
+            return 0;
+        }
+        return movie.getActors().size();
     }
 
     public Movie getMovie() { return movie; }

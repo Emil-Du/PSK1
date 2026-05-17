@@ -16,31 +16,64 @@
         table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background-color: #4CAF50; color: white; }
+        .error-msg { color: red; font-weight: bold; padding: 10px; border: 1px solid red; margin-bottom: 10px; }
+        .async-section { margin-top: 30px; padding: 15px; border: 1px solid #ddd; background: #fefefe; }
     </style>
 </h:head>
 <h:body>
     <h2>Studijos: #{moviesForStudio.studio.name} filmai</h2>
 
-    <h:dataTable value="#{moviesForStudio.studio.movies}" var="movie" border="1">
-        <h:column>
-            <f:facet name="header">ID</f:facet>
-            #{movie.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Pavadinimas</f:facet>
-            <h:link value="#{movie.title}" outcome="actors?movieId=#{movie.id}" />
-        </h:column>
-    </h:dataTable>
+    <h:panelGroup id="errorPanel">
+        <h:panelGroup rendered="#{moviesForStudio.optimisticLockError}">
+            <div class="error-msg">
+                KLAIDA: Duomenys buvo pakeisti kito vartotojo. Prašome perkrauti puslapį ir bandyti vėl.
+            </div>
+        </h:panelGroup>
+    </h:panelGroup>
+
+    <h:form>
+        <h:inputHidden value="#{moviesForStudio.studioId}" />
+
+        <h:dataTable value="#{moviesForStudio.studio.movies}" var="movie" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{movie.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pavadinimas</f:facet>
+                <h:inputText value="#{movie.title}" style="margin-right: 10px;" />
+                <h:link value="Aktoriai" outcome="actors?movieId=#{movie.id}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Veiksmas</f:facet>
+                <h:commandButton value="Update" action="#{moviesForStudio.updateMovieTitle(movie)}">
+                    <f:ajax execute="@form" render="@form :errorPanel" />
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+    </h:form>
 
     <h:form>
         <h3>Pridėti naują filmą</h3>
         <h:panelGrid columns="2">
             <h:outputLabel for="title" value="Filmo pavadinimas:" />
             <h:inputText id="title" value="#{moviesForStudio.movieToCreate.title}" required="true" />
-
             <h:commandButton value="Išsaugoti filmą" action="#{moviesForStudio.createMovie}" />
         </h:panelGrid>
     </h:form>
+
+    <div class="async-section">
+        <h:form>
+            <h3>Filmų ataskaita</h3>
+            <h:commandButton value="Generuoti filmų statistiką" action="#{moviesForStudio.startReportGeneration}">
+                <f:ajax render="reportStatus" />
+            </h:commandButton>
+            <p>Būsena: <strong><h:outputText id="reportStatus" value="#{moviesForStudio.reportStatusMessage}" /></strong></p>
+            <h:commandButton value="Atnaujinti būseną">
+                <f:ajax render="reportStatus" />
+            </h:commandButton>
+        </h:form>
+    </div>
 
     <hr/>
     <h:link value="Grįžti į studijų sąrašą" outcome="index" />

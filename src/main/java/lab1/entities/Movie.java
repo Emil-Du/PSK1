@@ -1,5 +1,6 @@
 package lab1.entities;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,16 @@ public class Movie {
 
     private String title;
 
+    @Version
+    @Column(name = "OPT_LOCK_VERSION")
+    private Integer version = 0;
+
+    @JsonbTransient
     @ManyToOne
     @JoinColumn(name = "STUDIO_ID")
     private Studio studio;
 
+    @JsonbTransient
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "MOVIE_ACTOR",
